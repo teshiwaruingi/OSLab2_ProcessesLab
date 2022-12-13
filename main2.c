@@ -1,36 +1,55 @@
-#include  <stdio.h>
-#include  <sys/types.h>
+#include <stdio.h>
+#include <sys/types.h>
 
-#define   MAX_COUNT  200
+// the maximum number of lines that each process should print
+#define MAX_COUNT 200
 
-void  ChildProcess(void);                /* child process prototype  */
-void  ParentProcess(void);               /* parent process prototype */
+// the function that the child process should execute
+void ChildProcess(void);
 
-void  main(void)
+// the function that the parent process should execute
+void ParentProcess(void);
+
+void main(void)
 {
-     pid_t  pid;
+  pid_t pid;
 
-     pid = fork();
-     if (pid == 0) 
-          ChildProcess();
-     else 
-          ParentProcess();
+  // create a child process
+  pid = fork();
+
+  // check if the child process was successfully created
+  if (pid == 0)
+  {
+    // execute the code for the child process
+    ChildProcess();
+  }
+  else
+  {
+    // execute the code for the parent process
+    ParentProcess();
+  }
 }
 
-void  ChildProcess(void)
+void ChildProcess(void)
 {
-     int   i;
+  int i;
 
-     for (i = 1; i <= MAX_COUNT; i++)
-          printf("   This line is from child, value = %d\n", i);
-     printf("   *** Child process is done ***\n");
+  // print the lines from the child process
+  for (i = 1; i <= MAX_COUNT; i++)
+    printf("   This line is from child, value = %d\n", i);
+
+  // print a message when the child process is done
+  printf("   *** Child process is done ***\n");
 }
 
-void  ParentProcess(void)
+void ParentProcess(void)
 {
-     int   i;
+  int i;
 
-     for (i = 1; i <= MAX_COUNT; i++)
-          printf("This line is from parent, value = %d\n", i);
-     printf("*** Parent is done ***\n");
+  // print the lines from the parent process
+  for (i = 1; i <= MAX_COUNT; i++)
+    printf("This line is from parent, value = %d\n", i);
+
+  // print a message when the parent process is done
+  printf("*** Parent is done ***\n");
 }
